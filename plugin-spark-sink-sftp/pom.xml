@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>waterdop</artifactId>
+        <groupId>io.github.interestinglab.waterdrop</groupId>
+        <version>2.0.4</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>plugin-spark-sink-sftp</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.interestinglab.waterdrop</groupId>
+            <artifactId>waterdrop-spark-api</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.11</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.springml</groupId>
+            <artifactId>spark-sftp_2.11</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+
+        <!--
+            该 jar 是手动加载到本地仓库然后引入的;
+            可以将 lib/spark-sftp-assembly-1.1.4.jar 的 jar 包执行如下命令加载到你的本地仓库中
+            mvn install:install-file -Dfile=《jar path》 -DgroupId=com.springml -DartifactId=spark-sftp-assembly -Dversion=1.1.4 -Dpackaging=jar
+         -->
+<!--        <dependency>-->
+<!--            <groupId>com.springml</groupId>-->
+<!--            <artifactId>spark-sftp-assembly</artifactId>-->
+<!--            <version>1.1.4</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; 引入本地修改好的源码包 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.springml</groupId>-->
+<!--            <artifactId>spark-sftp-assembly</artifactId>-->
+<!--            <version>1.1.4</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${basedir}/lib/spark-sftp-assembly-1.1.4.jar</systemPath>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+
+            <!-- maven-source-plugin has to be here to add sources for scala code, although -->
+            <!-- see https://stackoverflow.com/a/37174571/1145750 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
